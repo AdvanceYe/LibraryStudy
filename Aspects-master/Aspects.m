@@ -44,7 +44,31 @@ typedef struct _AspectBlock {
 @property (nonatomic, strong, readonly) NSInvocation *originalInvocation;
 @end
 
+
+/*
+ 原理：
+ hook:
+ hook任意一个方法时，改成执行objc_msgForward。。【每个class的每个方法都 hook 一次】
+ //aliasSelector-->oriSelector; selector-->_obj_msgForward...
+ 一个class生成一个对应的class_Aspect,并且hook forwardInvocation..
+ 
+ 
+ 
+ 
+ 
+ AspectIdentifier //执行方法相关的SEL相关的塞进来。。
+ AspectsContainer //以aspects__viewDidLoad作为key的名称。运行时创建一个AspectsContainer，每个obj/class(self)，绑定一个aspectContainer
+ 
+ AspectTracker:【这个主要是类相关的】
+ 一个class对应一个tracker..自身hook记录在.selectors中，子类hook记录在selectorNamesToSubclassTrackers中
+ 
+ 
+ 
+ */
+
+
 // Tracks a single aspect.
+//block参数，类方法等
 @interface AspectIdentifier : NSObject
 + (instancetype)identifierWithSelector:(SEL)selector object:(id)object options:(AspectOptions)options block:(id)block error:(NSError **)error;
 - (BOOL)invokeWithInfo:(id<AspectInfo>)info;
@@ -56,6 +80,7 @@ typedef struct _AspectBlock {
 @end
 
 // Tracks all aspects for an object/class.
+//一个obj/class添加一个 container....
 @interface AspectsContainer : NSObject
 - (void)addAspect:(AspectIdentifier *)aspect withOptions:(AspectOptions)injectPosition;
 - (BOOL)removeAspect:(id)aspect;
@@ -81,8 +106,10 @@ typedef struct _AspectBlock {
 - (NSArray *)aspects_arguments;
 @end
 
+//TODO:这个是为啥？
 #define AspectPositionFilter 0x07
 
+//define 中使用do while(0)，可以写代码块
 #define AspectError(errorCode, errorDescription) do { \
 AspectLogError(@"Aspects: %@", errorDescription); \
 if (error) { *error = [NSError errorWithDomain:AspectErrorDomain code:errorCode userInfo:@{NSLocalizedDescriptionKey: errorDescription}]; }}while(0)
@@ -115,14 +142,21 @@ static NSString *const AspectsMessagePrefix = @"aspects_";
 #pragma mark - Private Helper
 
 static id aspect_add(id self, SEL selector, AspectOptions options, id block, NSError **error) {
+    //TODO:断言，以后再看
     NSCParameterAssert(self);
     NSCParameterAssert(selector);
     NSCParameterAssert(block);
 
     __block AspectIdentifier *identifier = nil;
+    //线程安全
     aspect_performLocked(^{
+        //TODO:check不在黑名单里，实例方法可能添加过呀【类对象没有限制，随便就好了】，类方法还判断是否添加过就不添加了。。为啥默认为YES?
         if (aspect_isSelectorAllowedAndTrack(self, selector, options, error)) {
+            
+            //以aspects__viewDidLoad作为key的名称。新建一个AspectsContainer
+            //每个obj/class(self)，绑定一个aspectContainer
             AspectsContainer *aspectContainer = aspect_getContainerForObject(self, selector);
+            
             identifier = [AspectIdentifier identifierWithSelector:selector object:self options:options block:block error:error];
             if (identifier) {
                 [aspectContainer addAspect:identifier withOptions:options];
@@ -249,8 +283,10 @@ static IMP aspect_getMsgForwardIMP(NSObject *self, SEL selector) {
     // http://infocenter.arm.com/help/topic/com.arm.doc.ihi0042e/IHI0042E_aapcs.pdf (Section 5.4)
     Method method = class_getInstanceMethod(self.class, selector);
     const char *encoding = method_getTypeEncoding(method);
+    //arm64时，如果hook的是结构体的y话，应返回_objc_msgForward_stret
     BOOL methodReturnsStructValue = encoding[0] == _C_STRUCT_B;
     if (methodReturnsStructValue) {
+        //TODO: 对比一下这边和jspatch的有啥不同。。
         @try {
             NSUInteger valueSize = 0;
             NSGetSizeAndAlignment(encoding, &valueSize, NULL);
@@ -269,6 +305,7 @@ static IMP aspect_getMsgForwardIMP(NSObject *self, SEL selector) {
 
 static void aspect_prepareClassAndHookSelector(NSObject *self, SEL selector, NSError **error) {
     NSCParameterAssert(selector);
+    //TODO: 此处是hook一下被影响到的类？
     Class klass = aspect_hookClass(self, error);
     Method targetMethod = class_getInstanceMethod(klass, selector);
     IMP targetMethodIMP = method_getImplementation(targetMethod);
@@ -276,12 +313,16 @@ static void aspect_prepareClassAndHookSelector(NSObject *self, SEL selector, NSE
         // Make a method alias for the existing method implementation, it not already copied.
         const char *typeEncoding = method_getTypeEncoding(targetMethod);
         SEL aliasSelector = aspect_aliasForSelector(selector);
+        //aliasSelector-->oriSelector; selector-->_objc_msgForward...
         if (![klass instancesRespondToSelector:aliasSelector]) {
+            //__unused: 我不用这个变量的时候，你别提示unused..
             __unused BOOL addedAlias = class_addMethod(klass, aliasSelector, method_getImplementation(targetMethod), typeEncoding);
             NSCAssert(addedAlias, @"Original implementation for %@ is already copied to %@ on %@", NSStringFromSelector(selector), NSStringFromSelector(aliasSelector), klass);
         }
 
         // We use forwardInvocation to hook in.
+        //大概就是和_objc_msgForward替换了，让selector走消息转发
+        //TODO:此处typeEncoding怎么取的g？？
         class_replaceMethod(klass, selector, aspect_getMsgForwardIMP(self, selector), typeEncoding);
         AspectLog(@"Aspects: Installed hook for -[%@ %@].", klass, NSStringFromSelector(selector));
     }
@@ -361,7 +402,7 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
 	}else if (class_isMetaClass(baseClass)) {
         return aspect_swizzleClassInPlace((Class)self);
         // Probably a KVO'ed class. Swizzle in place. Also swizzle meta classes in place.
-    }else if (statedClass != baseClass) {
+    }else if (statedClass != baseClass) { //self是class类
         return aspect_swizzleClassInPlace(baseClass);
     }
 
@@ -387,6 +428,7 @@ static Class aspect_hookClass(NSObject *self, NSError **error) {
 	return subclass;
 }
 
+//hook了forwardInvocation:方法
 static NSString *const AspectsForwardInvocationSelectorName = @"__aspects_forwardInvocation:";
 static void aspect_swizzleForwardInvocation(Class klass) {
     NSCParameterAssert(klass);
@@ -494,8 +536,9 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
     }else {
         Class klass = object_getClass(invocation.target);
         do {
+            //此处aliasSelector是原方法
             if ((respondsToAlias = [klass instancesRespondToSelector:aliasSelector])) {
-                [invocation invoke];
+                [invocation invoke];//执行原方法
                 break;
             }
         }while (!respondsToAlias && (klass = class_getSuperclass(klass)));
@@ -506,6 +549,7 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
     aspect_invoke(objectContainer.afterAspects, info);
 
     // If no hooks are installed, call original implementation (usually to throw an exception)
+    //原方法无法执行，原方法走了消息转发。。因此执行消息转发
     if (!respondsToAlias) {
         invocation.selector = originalSelector;
         SEL originalForwardInvocationSEL = NSSelectorFromString(AspectsForwardInvocationSelectorName);
@@ -527,7 +571,9 @@ static void __ASPECTS_ARE_BEING_CALLED__(__unsafe_unretained NSObject *self, SEL
 // Loads or creates the aspect container.
 static AspectsContainer *aspect_getContainerForObject(NSObject *self, SEL selector) {
     NSCParameterAssert(self);
+    //以aspects__viewDidLoad作为key的名称。新建一个AspectsContainer类型的对象
     SEL aliasSelector = aspect_aliasForSelector(selector);
+    //每个obj/class(self)，绑定一个aspectContainer
     AspectsContainer *aspectContainer = objc_getAssociatedObject(self, aliasSelector);
     if (!aspectContainer) {
         aspectContainer = [AspectsContainer new];
@@ -569,6 +615,7 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
     static NSSet *disallowedSelectorList;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
+        //黑名单初始化
         disallowedSelectorList = [NSSet setWithObjects:@"retain", @"release", @"autorelease", @"forwardInvocation:", nil];
     });
 
@@ -581,7 +628,9 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
     }
 
     // Additional checks.
+    //TODO:AspectPositionFilter：0x07是干嘛用的呀??
     AspectOptions position = options&AspectPositionFilter;
+    //特别处理dealloc: 允许before处理
     if ([selectorName isEqualToString:@"dealloc"] && position != AspectPositionBefore) {
         NSString *errorDesc = @"AspectPositionBefore is the only valid position when hooking dealloc.";
         AspectError(AspectErrorSelectorDeallocPosition, errorDesc);
@@ -601,15 +650,19 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
         Class currentClass = [self class];
 
         AspectTracker *tracker = swizzledClassesDict[currentClass];
+        //查找class的 hook 记录
+        //子类中hook了。
         if ([tracker subclassHasHookedSelectorName:selectorName]) {
+            //哪个子类，子类名字。。
             NSSet *subclassTracker = [tracker subclassTrackersHookingSelectorName:selectorName];
             NSSet *subclassNames = [subclassTracker valueForKey:@"trackedClassName"];
             NSString *errorDescription = [NSString stringWithFormat:@"Error: %@ already hooked subclasses: %@. A method can only be hooked once per class hierarchy.", selectorName, subclassNames];
             AspectError(AspectErrorSelectorAlreadyHookedInClassHierarchy, errorDescription);
             return NO;
         }
-
+        //查找父类中是否有
         do {
+            //遍历父类中的tracker..selectorNames中有没有hit的
             tracker = swizzledClassesDict[currentClass];
             if ([tracker.selectorNames containsObject:selectorName]) {
                 if (klass == currentClass) {
@@ -623,27 +676,34 @@ static BOOL aspect_isSelectorAllowedAndTrack(NSObject *self, SEL selector, Aspec
         } while ((currentClass = class_getSuperclass(currentClass)));
 
         // Add the selector as being modified.
+        //之前没有添加过，添加flag标记
         currentClass = klass;
         AspectTracker *subclassTracker = nil;
         do {
             tracker = swizzledClassesDict[currentClass];
+            //一个class对应一个tracker...
             if (!tracker) {
                 tracker = [[AspectTracker alloc] initWithTrackedClass:currentClass];
+                //全局存起来。。
                 swizzledClassesDict[(id<NSCopying>)currentClass] = tracker;
             }
+            
+            //子类加hook的话，放入subclass tracker..
             if (subclassTracker) {
                 [tracker addSubclassTracker:subclassTracker hookingSelectorName:selectorName];
             } else {
+                //当前类就加hook的话，放入selectorNames..
                 [tracker.selectorNames addObject:selectorName];
             }
 
             // All superclasses get marked as having a subclass that is modified.
+            //每个父类都标记有一个子类subclassTracker..
             subclassTracker = tracker;
         }while ((currentClass = class_getSuperclass(currentClass)));
 	} else {
 		return YES;
 	}
-
+    //TODO: 实例方法为啥默认yes了呢？可能添加过呀。。
     return YES;
 }
 
@@ -680,7 +740,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     }
     return self;
 }
-
+//TODO：待看
 - (BOOL)subclassHasHookedSelectorName:(NSString *)selectorName {
     return self.selectorNamesToSubclassTrackers[selectorName] != nil;
 }
@@ -827,6 +887,7 @@ static void aspect_deregisterTrackedSelector(id self, SEL selector) {
     return identifier;
 }
 
+//TODO:
 - (BOOL)invokeWithInfo:(id<AspectInfo>)info {
     NSInvocation *blockInvocation = [NSInvocation invocationWithMethodSignature:self.blockSignature];
     NSInvocation *originalInvocation = info.originalInvocation;
