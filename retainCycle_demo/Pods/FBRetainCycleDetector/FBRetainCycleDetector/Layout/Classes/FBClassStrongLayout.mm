@@ -187,20 +187,24 @@ NSArray<id<FBObjectReference>> *FBGetObjectStrongReferences(id obj,
                                                             NSMutableDictionary<Class, NSArray<id<FBObjectReference>> *> *layoutCache) {
   NSMutableArray<id<FBObjectReference>> *array = [NSMutableArray new];
 
+    //此处为什么是__unsafe_unretained? class类不会释放，所以还好其实。。用strong也行。。可能后来iOS接口性质变了
   __unsafe_unretained Class previousClass = nil;
-  __unsafe_unretained Class currentClass = object_getClass(obj);
+  __unsafe_unretained Class currentClass = object_getClass(obj); //如果不用的话很快就释放了
 
   while (previousClass != currentClass) {
+      NSLog(@"currentClass = %@, = %p, isMeta = %d", currentClass, currentClass, class_isMetaClass(currentClass));
     NSArray<id<FBObjectReference>> *ivars;
     
     if (layoutCache && currentClass) {
-      ivars = layoutCache[currentClass];
+      ivars = layoutCache[currentClass]; //指针可以作为key值
     }
     
     if (!ivars) {
+        //获取strong类型的地方
       ivars = FBGetStrongReferencesForClass(currentClass);
       if (layoutCache && currentClass) {
         layoutCache[currentClass] = ivars;
+          NSLog(@"layoutCache = %@", layoutCache);
       }
     }
     [array addObjectsFromArray:ivars];
@@ -209,5 +213,7 @@ NSArray<id<FBObjectReference>> *FBGetObjectStrongReferences(id obj,
     currentClass = class_getSuperclass(currentClass);
   }
 
+    NSLog(@"class - current = %@", currentClass);
+    NSLog(@"class - prev = %@", previousClass);
   return [array copy];
 }

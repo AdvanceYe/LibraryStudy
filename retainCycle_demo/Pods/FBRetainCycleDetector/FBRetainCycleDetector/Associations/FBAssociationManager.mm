@@ -198,7 +198,12 @@ namespace FB { namespace AssociationManager {
 + (NSArray *)associationsForObject:(id)object
 {
 #if _INTERNAL_RCD_ENABLED
-  return FB::AssociationManager::associations(object);
+    
+  id result = FB::AssociationManager::associations(object);
+    if (result) {
+        NSLog(@"enen?");
+    }
+    return result;
 #else
   return nil;
 #endif //_INTERNAL_RCD_ENABLED

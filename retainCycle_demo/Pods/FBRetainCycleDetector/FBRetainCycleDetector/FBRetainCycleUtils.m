@@ -59,7 +59,7 @@ FBObjectiveCGraphElement *FBWrapObjectGraphElementWithContext(FBObjectiveCGraphE
                                                      namePath:namePath];
     }
   }
-    //是否姚转换。
+    //是否要转换。
   return (configuration && configuration.transformerBlock) ? configuration.transformerBlock(newElement) : newElement;
 }
 

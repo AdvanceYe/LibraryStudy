@@ -23,6 +23,16 @@ FOUNDATION_EXPORT const unsigned char FBRetainCycleDetectorVersionString[];
 #import "FBObjectGraphConfiguration.h"
 #import "FBStandardGraphEdgeFilters.h"
 
+/*
+ 
+ FBObjectiveCGraphElement: 父类, retainObjects为关联对象的
+ 
+ FBObjectiveCObject
+ FBObjectiveCNSCFTimer
+ FBObjectiveCBlock
+ */
+
+
 /**
  Retain Cycle Detector is enabled by default in DEBUG builds, but you can also force it in other builds by
  uncommenting the line below. Beware, Retain Cycle Detector uses some private APIs that shouldn't be compiled in

@@ -67,6 +67,7 @@
 
 - (NSSet *)allRetainedObjects
 {
+    //原始的retained的objects
   NSArray *retainedObjectsNotWrapped = [FBAssociationManager associationsForObject:_object];
   NSMutableSet *retainedObjects = [NSMutableSet new];
 

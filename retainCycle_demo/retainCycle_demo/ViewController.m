@@ -35,18 +35,28 @@
 @end
 
 @implementation ViewController
+
+- (void)testObj {
+    TestObj *obj = [TestObj new];
+    self.myObj = obj;
+    obj.obj2 = self;
+}
+
+- (void)testBlock {
+    self.block = ^BOOL{
+        self;
+        return NO;
+    };
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
 //    SomeObj *someObj = [SomeObj new];
     
-//    TestObj *obj = [TestObj new];
-//    self.myObj = obj;
-//    obj.obj2 = self;
-    self.block = ^BOOL{
-        self;
-        return NO;
-    };
+//    [self testObj];
+    
+    [self testBlock];
     
 //    self.dataArray = [NSMutableArray new];
 //    self.myObj.dataArray2 = self.dataArray;
