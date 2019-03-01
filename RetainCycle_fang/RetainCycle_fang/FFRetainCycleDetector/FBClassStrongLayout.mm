@@ -16,15 +16,20 @@
 
 #import "FBIvarReference.h"
 #import "FBObjectInStructReference.h"
+#import "FBStructEncodingParser.h"
+#import "Struct.h"
+#import "Type.h"
 
 
 static NSArray *FBGetReferencesForObjectsInStructEncoding(FBIvarReference *ivar, std::string encoding) {
     NSMutableArray<FBObjectInStructReference *> *references = [NSMutableArray new];
     
     std::string ivarName = std::string([ivar.name cStringUsingEncoding:NSUTF8StringEncoding]);
+    FB::RetainCycleDetector::Parser::Struct parsedStruct =
+    FB::RetainCycleDetector::Parser::parseStructEncodingWithName(encoding, ivarName);
+    
+    std::vector<std::shared_ptr<FB::RetainCycleDetector::Parser::Type>> types = parsedStruct.flattenTypes();
 
-    
-    
     return nil;
 }
 
@@ -51,7 +56,13 @@ NSArray<id<FBObjectReference>> *FBGetClassReferences(Class aCls) {
 
 //FBGetStrongReferencesForClass
 static NSArray<id<FBObjectReference>> *FBGetStrongReferencesForClass(Class aCls) {
-    NSArray<id<FBObjectReference>> *ivars = nil;
+    NSArray<id<FBObjectReference>> *ivars = [FBGetClassReferences(aCls) filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        if ([evaluatedObject isKindOfClass:[FBIvarReference class]]) {
+            FBIvarReference *wrapper = evaluatedObject;
+            return wrapper.type != FBUnknownType;
+        }
+        return YES;
+    }]];
     return ivars;
 }
 

@@ -17,14 +17,21 @@ namespace FB { namespace RetainCycleDetector { namespace Parser {
     virtual ~BaseType() {}
   };
   
+    //TODO: 干哈用的，回头再看??
   class Unresolved: public BaseType {
   public:
     std::string value;
     Unresolved(std::string value): value(value) {}
+      
+      /*
+       https://blog.csdn.net/caroline_wendy/article/details/15029287
+       lvalue, rvalue重载
+       右值引用 &&i: 对象值引用
+      */
     Unresolved(Unresolved&&) = default;
     Unresolved &operator=(Unresolved&&) = default;
     
-    Unresolved(const Unresolved&) = delete;
-    Unresolved &operator=(const Unresolved&) = delete;
+    Unresolved(const Unresolved&) = delete; //拷贝构造函数为deleted函数
+    Unresolved &operator=(const Unresolved&) = delete; //拷贝赋值操作符为 deleted 函数
   };
 } } }

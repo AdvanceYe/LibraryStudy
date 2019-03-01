@@ -18,7 +18,7 @@
 		FA5BA5AB221E9C7900EA12BE /* FBClassStrongLayout.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA5BA5AA221E9C7900EA12BE /* FBClassStrongLayout.mm */; };
 		FABF1DAC222170710019E2EA /* FBIvarReference.m in Sources */ = {isa = PBXBuildFile; fileRef = FABF1DAB222170710019E2EA /* FBIvarReference.m */; };
 		FABF1DB2222178E20019E2EA /* FBObjectInStructReference.m in Sources */ = {isa = PBXBuildFile; fileRef = FABF1DB1222178E20019E2EA /* FBObjectInStructReference.m */; };
-		FABF1DB422217D5F0019E2EA /* FBStructEncodingParse.mm in Sources */ = {isa = PBXBuildFile; fileRef = FABF1DB322217D5F0019E2EA /* FBStructEncodingParse.mm */; };
+		FABF1DB422217D5F0019E2EA /* FBStructEncodingParser.mm in Sources */ = {isa = PBXBuildFile; fileRef = FABF1DB322217D5F0019E2EA /* FBStructEncodingParser.mm */; };
 		FABF1DB822217DF70019E2EA /* Struct.mm in Sources */ = {isa = PBXBuildFile; fileRef = FABF1DB722217DF70019E2EA /* Struct.mm */; };
 /* End PBXBuildFile section */
 
@@ -63,8 +63,8 @@
 		FABF1DAD222172A00019E2EA /* FBObjectReference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBObjectReference.h; sourceTree = "<group>"; };
 		FABF1DB0222178E20019E2EA /* FBObjectInStructReference.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBObjectInStructReference.h; sourceTree = "<group>"; };
 		FABF1DB1222178E20019E2EA /* FBObjectInStructReference.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FBObjectInStructReference.m; sourceTree = "<group>"; };
-		FABF1DB322217D5F0019E2EA /* FBStructEncodingParse.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBStructEncodingParse.mm; sourceTree = "<group>"; };
-		FABF1DB522217D6B0019E2EA /* FBStructEncodingParse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBStructEncodingParse.h; sourceTree = "<group>"; };
+		FABF1DB322217D5F0019E2EA /* FBStructEncodingParser.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FBStructEncodingParser.mm; sourceTree = "<group>"; };
+		FABF1DB522217D6B0019E2EA /* FBStructEncodingParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBStructEncodingParser.h; sourceTree = "<group>"; };
 		FABF1DB622217DE60019E2EA /* Struct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Struct.h; sourceTree = "<group>"; };
 		FABF1DB722217DF70019E2EA /* Struct.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Struct.mm; sourceTree = "<group>"; };
 		FABF1DB922217E280019E2EA /* Type.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Type.h; sourceTree = "<group>"; };
@@ -161,8 +161,8 @@
 				FABF1DB0222178E20019E2EA /* FBObjectInStructReference.h */,
 				FABF1DB1222178E20019E2EA /* FBObjectInStructReference.m */,
 				FABF1DAD222172A00019E2EA /* FBObjectReference.h */,
-				FABF1DB522217D6B0019E2EA /* FBStructEncodingParse.h */,
-				FABF1DB322217D5F0019E2EA /* FBStructEncodingParse.mm */,
+				FABF1DB522217D6B0019E2EA /* FBStructEncodingParser.h */,
+				FABF1DB322217D5F0019E2EA /* FBStructEncodingParser.mm */,
 				FABF1DB622217DE60019E2EA /* Struct.h */,
 				FABF1DB722217DF70019E2EA /* Struct.mm */,
 				FABF1DB922217E280019E2EA /* Type.h */,
@@ -306,7 +306,7 @@
 				FA5BA56C221E5ABD00EA12BE /* ViewController.m in Sources */,
 				FA5BA5AB221E9C7900EA12BE /* FBClassStrongLayout.mm in Sources */,
 				FA5BA577221E5ABE00EA12BE /* main.m in Sources */,
-				FABF1DB422217D5F0019E2EA /* FBStructEncodingParse.mm in Sources */,
+				FABF1DB422217D5F0019E2EA /* FBStructEncodingParser.mm in Sources */,
 				FA5BA569221E5ABC00EA12BE /* AppDelegate.m in Sources */,
 				FABF1DAC222170710019E2EA /* FBIvarReference.m in Sources */,
 			);

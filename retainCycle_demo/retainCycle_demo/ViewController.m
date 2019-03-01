@@ -20,9 +20,20 @@
 @property (nonatomic, weak) id wobj3;
 @property (nonatomic, strong) id sobj4;
 
++ (instancetype)shared;
+
 @end
 
 @implementation TestObj
+
++ (instancetype)shared {
+    static TestObj *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [TestObj new];
+    });
+    return instance;
+}
 
 @end
 
@@ -30,6 +41,7 @@
 
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) TestObj *myObj;
+@property (nonatomic, weak) id wobj3;
 @property (nonatomic, copy) BOOL (^block)(void);
 
 @end
@@ -43,6 +55,7 @@
 }
 
 - (void)testBlock {
+    self.wobj3 = [TestObj shared];
     self.block = ^BOOL{
         self;
         return NO;
