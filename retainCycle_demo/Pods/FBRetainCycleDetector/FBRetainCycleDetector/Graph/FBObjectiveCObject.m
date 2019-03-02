@@ -25,9 +25,11 @@
     return nil;
   }
 
+    //普通继承关系的object的指针
   NSArray *strongIvars = FBGetObjectStrongReferences(self.object, self.configuration.layoutCache);
 
     //[super allRetainedObjects]主要是关联对象的。
+    //TODO: 待看
   NSMutableArray *retainedObjects = [[[super allRetainedObjects] allObjects] mutableCopy];
 
   for (id<FBObjectReference> ref in strongIvars) {
@@ -35,6 +37,7 @@
 
     if (referencedObject) {
       NSArray<NSString *> *namePath = [ref namePath];
+        //object中的strong ivars包装成FBObjectiveCGraphElement类
       FBObjectiveCGraphElement *element = FBWrapObjectGraphElementWithContext(self,
                                                                               referencedObject,
                                                                               self.configuration,

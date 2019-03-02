@@ -30,7 +30,7 @@
 {
   if (!_object) {
     return nil;
-  } else if (!_retainedObjectsSnapshot) {
+  } else if (!_retainedObjectsSnapshot) { //懒加载_retainedObjectsSnapshot
       //获得所有的objects, 存进set
     _retainedObjectsSnapshot = [_object allRetainedObjects];
       //返回所有的enumerator

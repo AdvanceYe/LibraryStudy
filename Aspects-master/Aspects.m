@@ -54,8 +54,6 @@ typedef struct _AspectBlock {
  
  
  
- 
- 
  AspectIdentifier //执行方法相关的SEL相关的塞进来。。
  AspectsContainer //以aspects__viewDidLoad作为key的名称。运行时创建一个AspectsContainer，每个obj/class(self)，绑定一个aspectContainer
  

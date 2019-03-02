@@ -7,3 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "FBStructEncodingParser.h"
+
+#import "BaseType.h"
+
+namespace FB {  namespace RetainCycleDetector {  namespace Parser {
+    
+//    Struct parseStructEncoding(const std::string &structEncodingString) {
+//        return Struct(nil, nil, nil, nil);
+//    }
+//
+//    Struct parseStructEncodingWithName(const std::string &structEncodingString,
+//                                       const std::string &structName) {
+//        return Struct(nil, nil, nil, nil);
+//    }
+    
+} } }

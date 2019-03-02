@@ -42,6 +42,7 @@
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) TestObj *myObj;
 @property (nonatomic, weak) id wobj3;
+@property (nonatomic, weak) id wobj4;
 @property (nonatomic, copy) BOOL (^block)(void);
 
 @end

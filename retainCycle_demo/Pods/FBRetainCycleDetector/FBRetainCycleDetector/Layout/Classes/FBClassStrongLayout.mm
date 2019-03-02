@@ -105,6 +105,7 @@ NSArray<id<FBObjectReference>> *FBGetClassReferences(Class aCls) {
     Ivar ivar = ivars[i];
     FBIvarReference *wrapper = [[FBIvarReference alloc] initWithIvar:ivar];
 
+      // struct类型的获取
     if (wrapper.type == FBStructType) {
       std::string encoding = std::string(ivar_getTypeEncoding(wrapper.ivar));
       NSArray<FBObjectInStructReference *> *references = FBGetReferencesForObjectsInStructEncoding(wrapper, encoding);
@@ -123,11 +124,17 @@ static NSIndexSet *FBGetLayoutAsIndexesForDescription(NSUInteger minimumIndex, c
   NSMutableIndexSet *interestingIndexes = [NSMutableIndexSet new];
   NSUInteger currentIndex = minimumIndex;
 
+    /*
+     https://zhidao.baidu.com/question/1047277538585998979.html
+     eg. '\x02' & 0xf0 = 0x0000 0010 & 0x1111 0000 = 0x0000 0000 >> 4 = 0x0000 - 低4位被清0，高4位
+     eg. '\x02' & 0xf = 0x 0000 0010 & 0x0000 1111 = 0x0000 0010 = 低4位
+     eg. '\x02!', '\x02', '\0x21'ASCII码
+     */
   while (*layoutDescription != '\x00') {
     int upperNibble = (*layoutDescription & 0xf0) >> 4;
-    int lowerNibble = *layoutDescription & 0xf; // string个数
+    int lowerNibble = *layoutDescription & 0xf;
 
-    // Upper nimble is for skipping -- weak个数，需要跳的
+    // Upper nimble is for skipping -- 高位是weak个数，需要跳的
     currentIndex += upperNibble;
 
     // Lower nimble describes count
@@ -158,25 +165,30 @@ static NSUInteger FBGetMinimumIvarIndex(__unsafe_unretained Class aCls) {
 
 static NSArray<id<FBObjectReference>> *FBGetStrongReferencesForClass(Class aCls) {
   NSArray<id<FBObjectReference>> *ivars = [FBGetClassReferences(aCls) filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+      //object类型的
     if ([evaluatedObject isKindOfClass:[FBIvarReference class]]) {
       FBIvarReference *wrapper = evaluatedObject;
-      return wrapper.type != FBUnknownType;
+      return wrapper.type != FBUnknownType; //object或者block的(无论strong/weak)
     }
+      //struct类型的
     return YES;
   }]];
 
   const uint8_t *fullLayout = class_getIvarLayout(aCls);
 
+  //有变量
   if (!fullLayout) {
     return nil;
   }
 
   NSUInteger minimumIndex = FBGetMinimumIvarIndex(aCls);
+    //获取strong ivar的位置
   NSIndexSet *parsedLayout = FBGetLayoutAsIndexesForDescription(minimumIndex, fullLayout);
 
   NSArray<id<FBObjectReference>> *filteredIvars =
   [ivars filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id<FBObjectReference> evaluatedObject,
                                                                            NSDictionary *bindings) {
+      //ivar或者struct, 获取index
     return [parsedLayout containsIndex:[evaluatedObject indexInIvarLayout]];
   }]];
 
@@ -199,6 +211,7 @@ NSArray<id<FBObjectReference>> *FBGetObjectStrongReferences(id obj,
       ivars = layoutCache[currentClass]; //指针可以作为key值
     }
     
+      //懒加载获取一个class的ivars
     if (!ivars) {
         //获取strong类型的地方
       ivars = FBGetStrongReferencesForClass(currentClass);
