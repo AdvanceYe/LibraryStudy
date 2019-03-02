@@ -48,6 +48,7 @@
     }
   }
 
+    //TODO: tollFree的这么处理
   if ([NSStringFromClass(aCls) hasPrefix:@"__NSCF"]) {
     /**
      If we are dealing with toll-free bridged collections, we are not guaranteed that the collection
@@ -57,6 +58,7 @@
     return [NSSet setWithArray:retainedObjects];
   }
 
+    //TODO: 为啥会crash....
   if (class_isMetaClass(aCls)) {
     // If it's a meta-class it can conform to following protocols,
     // but it would crash when trying enumerating

@@ -30,7 +30,9 @@
 {
   if (!_object) {
     return nil;
-  } else if (!_retainedObjectsSnapshot) { //懒加载_retainedObjectsSnapshot
+  } else if (!_retainedObjectsSnapshot) {
+      //懒加载生成_retainedObjectsSnapshot和_enumerator
+      
       //获得所有的objects, 存进set
     _retainedObjectsSnapshot = [_object allRetainedObjects];
       //返回所有的enumerator
@@ -40,7 +42,7 @@
   FBObjectiveCGraphElement *next = [_enumerator nextObject];
 
   if (next) {
-    return [[FBNodeEnumerator alloc] initWithObject:next]; //每个next都包成FBNodeEnumerator，后返回
+    return [[FBNodeEnumerator alloc] initWithObject:next]; //每个object都包成FBNodeEnumerator，然后返回
   }
 
   return nil;
@@ -58,7 +60,7 @@
 
 - (NSUInteger)hash
 {
-  return [self.object hash];
+    return [self.object hash];
 }
 
 @end

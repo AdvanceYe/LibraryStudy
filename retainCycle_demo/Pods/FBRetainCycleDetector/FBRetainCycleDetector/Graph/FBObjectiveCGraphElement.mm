@@ -65,9 +65,10 @@
   return self;
 }
 
+//FBObjectiveCGraphElement是父类
 - (NSSet *)allRetainedObjects
 {
-    //原始的retained的objects
+  //获取关联对象的
   NSArray *retainedObjectsNotWrapped = [FBAssociationManager associationsForObject:_object];
   NSMutableSet *retainedObjects = [NSMutableSet new];
 

@@ -9,14 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Layout/Classes/FBClassStrongLayout.mm"
-            timestampString = "573205903.009926"
+            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Detector/FBRetainCycleDetector.mm"
+            timestampString = "573237891.499898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
-            landmarkName = "FBGetMinimumIvarIndex(__unsafe_unretained Class aCls)"
-            landmarkType = "9">
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-_findRetainCyclesInObject:stackDepth:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,14 +25,30 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Layout/Classes/FBClassStrongLayout.mm"
-            timestampString = "573205903.010159"
+            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Graph/FBObjectiveCGraphElement.mm"
+            timestampString = "573237669.020891"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "FBGetLayoutAsIndexesForDescription(NSUInteger minimumIndex, const uint8_t *layoutDescription)"
-            landmarkType = "9">
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-allRetainedObjects"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Detector/FBNodeEnumerator.mm"
+            timestampString = "573237891.500259"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "-nextObject"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

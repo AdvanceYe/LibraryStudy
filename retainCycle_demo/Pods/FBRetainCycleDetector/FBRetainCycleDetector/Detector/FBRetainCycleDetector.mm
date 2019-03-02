@@ -72,6 +72,7 @@ static const NSUInteger kFBRetainCycleDetectorDefaultStackDepth = 10;
 
   // Filter cycles that have been broken down since we found them.
   // These are false-positive that were picked-up and are transient cycles.
+    //找完了之后又变成nil的，去掉。。
   NSMutableSet<NSArray<FBObjectiveCGraphElement *> *> *brokenCycles = [NSMutableSet set];
   for (NSArray<FBObjectiveCGraphElement *> *itemCycle in allRetainCycles) {
     for (FBObjectiveCGraphElement *element in itemCycle) {
@@ -117,8 +118,8 @@ static const NSUInteger kFBRetainCycleDetectorDefaultStackDepth = 10;
       FBNodeEnumerator *top = [stack lastObject];
 
       // We don't want to retraverse the same subtree
-      if (![objectsOnPath containsObject:top]) {
-        if ([_objectSet containsObject:@([top.object objectAddress])]) {
+      if (![objectsOnPath containsObject:top]) { //通过isEqual和hash来判断
+        if ([_objectSet containsObject:@([top.object objectAddress])]) { //没包装过的object
           [stack removeLastObject];
           continue;
         }
@@ -139,14 +140,14 @@ static const NSUInteger kFBRetainCycleDetectorDefaultStackDepth = 10;
         BOOL shouldPushToStack = NO;
 
         // Check if child was already seen in that path
-        if ([objectsOnPath containsObject:firstAdjacent]) {
+        if ([objectsOnPath containsObject:firstAdjacent]) { //hash
           // We have caught a retain cycle
 
           // Ignore the first element which is equal to firstAdjacent, use firstAdjacent
           // we're doing that because firstAdjacent has set all contexts, while its
           // first occurence could be a root without any context
           NSUInteger index = [stack indexOfObject:firstAdjacent];
-          NSInteger length = [stack count] - index;
+          NSInteger length = [stack count] - index; //
 
           if (index == NSNotFound) {
             // Object got deallocated between checking if it exists and grabbing its index
@@ -228,6 +229,7 @@ static const NSUInteger kFBRetainCycleDetectorDefaultStackDepth = 10;
  If that ever occurs to be a problem for future reference use lexicographically minimal
  string rotation algorithm variation.
  */
+//TODO: 这个有点看不太懂..
 - (NSArray<FBObjectiveCGraphElement *> *)_shiftToLowestLexicographically:(NSArray<FBObjectiveCGraphElement *> *)array
 {
   NSArray<NSString *> *arrayOfClassNames = [self _extractClassNamesFromGraphObjects:array];
