@@ -6,17 +6,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Detector/FBRetainCycleDetector.mm"
-            timestampString = "573237891.499898"
+            filePath = "Pods/YYModel/YYModel/NSObject+YYModel.m"
+            timestampString = "573473506.180962"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "-_findRetainCyclesInObject:stackDepth:"
-            landmarkType = "7">
+            startingLineNumber = "923"
+            endingLineNumber = "923"
+            landmarkName = "ModelSetValueForProperty"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/FBRetainCycleDetector/FBRetainCycleDetector/Graph/FBObjectiveCGraphElement.mm"
-            timestampString = "573237669.020891"
+            filePath = "yymodel_demo/ViewController.m"
+            timestampString = "573473506.181264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "-allRetainedObjects"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "-benchmarkWeiboStatus"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
