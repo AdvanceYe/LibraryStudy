@@ -71,7 +71,6 @@ static UIApplication *_YYSharedApplication() {
 #pragma clang diagnostic pop
 }
 
-
 @implementation YYKVStorageItem
 @end
 
@@ -99,6 +98,11 @@ static UIApplication *_YYSharedApplication() {
     if (result == SQLITE_OK) {
         CFDictionaryKeyCallBacks keyCallbacks = kCFCopyStringDictionaryKeyCallBacks;
         CFDictionaryValueCallBacks valueCallbacks = {0};
+        /*
+         {0}应该是等于__kCFNullDictionaryValueCallBacks
+         https://opensource.apple.com/source/CF/CF-368/Collections.subproj/CFDictionary.c.auto.html
+         static const CFDictionaryValueCallBacks __kCFNullDictionaryValueCallBacks = {0, NULL, NULL, NULL, NULL};
+         */
         _dbStmtCache = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &keyCallbacks, &valueCallbacks);
         _dbLastOpenErrorTime = 0;
         _dbOpenErrorCount = 0;
@@ -127,19 +131,24 @@ static UIApplication *_YYSharedApplication() {
     if (_dbStmtCache) CFRelease(_dbStmtCache);
     _dbStmtCache = NULL;
     
+    //转圈，等待关闭
     do {
         retry = NO;
         result = sqlite3_close(_db);
+        //正常等待关闭
         if (result == SQLITE_BUSY || result == SQLITE_LOCKED) {
+            //finalize所有的stmt..
             if (!stmtFinalized) {
-                stmtFinalized = YES;
+                stmtFinalized = YES; //stmt
                 sqlite3_stmt *stmt;
                 while ((stmt = sqlite3_next_stmt(_db, nil)) != 0) {
+                    //释放所有的下一条stmt..
                     sqlite3_finalize(stmt);
                     retry = YES;
                 }
             }
         } else if (result != SQLITE_OK) {
+            //关闭异常..
             if (_errorLogsEnabled) {
                 NSLog(@"%s line:%d sqlite close failed (%d).", __FUNCTION__, __LINE__, result);
             }
@@ -150,9 +159,10 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (BOOL)_dbCheck {
+    //再确保_db还在，如果不在，重新创建
     if (!_db) {
         if (_dbOpenErrorCount < kMaxErrorRetryCount &&
-            CACurrentMediaTime() - _dbLastOpenErrorTime > kMinRetryTimeInterval) {
+            CACurrentMediaTime() - _dbLastOpenErrorTime > kMinRetryTimeInterval) {//设了个重试最短时间
             return [self _dbOpen] && [self _dbInitialize];
         } else {
             return NO;
@@ -162,6 +172,11 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (BOOL)_dbInitialize {
+    /*
+     https://sqlite.org/wal.html
+     wal的好处：读写并行，性能高
+     WAL mode is always consistent with synchronous=NORMAL
+     */
     NSString *sql = @"pragma journal_mode = wal; pragma synchronous = normal; create table if not exists manifest (key text, filename text, size integer, inline_data blob, modification_time integer, last_access_time integer, extended_data blob, primary key(key)); create index if not exists last_access_time_idx on manifest(last_access_time);";
     return [self _dbExecute:sql];
 }
@@ -188,6 +203,7 @@ static UIApplication *_YYSharedApplication() {
 
 - (sqlite3_stmt *)_dbPrepareStmt:(NSString *)sql {
     if (![self _dbCheck] || sql.length == 0 || !_dbStmtCache) return NULL;
+    //走了个缓存
     sqlite3_stmt *stmt = (sqlite3_stmt *)CFDictionaryGetValue(_dbStmtCache, (__bridge const void *)(sql));
     if (!stmt) {
         int result = sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL);
@@ -230,8 +246,10 @@ static UIApplication *_YYSharedApplication() {
     sqlite3_bind_text(stmt, 2, fileName.UTF8String, -1, NULL);
     sqlite3_bind_int(stmt, 3, (int)value.length);
     if (fileName.length == 0) {
+        //sqlite型
         sqlite3_bind_blob(stmt, 4, value.bytes, (int)value.length, 0);
     } else {
+        //file型
         sqlite3_bind_blob(stmt, 4, NULL, 0, 0);
     }
     sqlite3_bind_int(stmt, 5, timestamp);
@@ -299,6 +317,7 @@ static UIApplication *_YYSharedApplication() {
 - (BOOL)_dbDeleteItemWithKeys:(NSArray *)keys {
     if (![self _dbCheck]) return NO;
     NSString *sql =  [NSString stringWithFormat:@"delete from manifest where key in (%@);", [self _dbJoinedKeys:keys]];
+    //因为估计keys不会相同，所以不做缓存了？
     sqlite3_stmt *stmt = NULL;
     int result = sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL);
     if (result != SQLITE_OK) {
@@ -629,7 +648,9 @@ static UIApplication *_YYSharedApplication() {
     return [[NSFileManager defaultManager] removeItemAtPath:path error:NULL];
 }
 
+//将data path整个移到trash中
 - (BOOL)_fileMoveAllToTrash {
+    //用uuid创建
     CFUUIDRef uuidRef = CFUUIDCreate(NULL);
     CFStringRef uuid = CFUUIDCreateString(NULL, uuidRef);
     CFRelease(uuidRef);
@@ -711,11 +732,13 @@ static UIApplication *_YYSharedApplication() {
         NSLog(@"YYKVStorage init error:%@", error);
         return nil;
     }
-    
+    // _dbOpen: open db; _dbInitialize: create table啥的
     if (![self _dbOpen] || ![self _dbInitialize]) {
         // db file may broken...
         [self _dbClose];
         [self _reset]; // rebuild
+        
+        //retry一次，还有问题就报错
         if (![self _dbOpen] || ![self _dbInitialize]) {
             [self _dbClose];
             NSLog(@"YYKVStorage init error: fail to open sqlite db.");
@@ -727,6 +750,11 @@ static UIApplication *_YYSharedApplication() {
 }
 
 - (void)dealloc {
+    /*
+     进入后台，关闭db..
+     This method lets your app continue to run for a period of time after it transitions to the background. You should call this method at times where leaving a task unfinished might be detrimental to your app’s user experience. For example, your app could call this method to ensure that had enough time to transfer an important file to a remote server or at least attempt to make the transfer and note any errors. You should not use this method simply to keep your app running after it moves to the background.
+
+     */
     UIBackgroundTaskIdentifier taskID = [_YYSharedApplication() beginBackgroundTaskWithExpirationHandler:^{}];
     [self _dbClose];
     if (taskID != UIBackgroundTaskInvalid) {
@@ -747,23 +775,27 @@ static UIApplication *_YYSharedApplication() {
     if (_type == YYKVStorageTypeFile && filename.length == 0) {
         return NO;
     }
-    
     if (filename.length) {
         if (![self _fileWriteWithName:filename data:value]) {
             return NO;
         }
+        //一个file: data存在file里；基本信息用sqlite(数据查询用)
+        //写的进去file, 再去尝试写sql metaData..
         if (![self _dbSaveWithKey:key value:value fileName:filename extendedData:extendedData]) {
+            //sql写失败了，直接删除file
             [self _fileDeleteWithName:filename];
             return NO;
         }
         return YES;
     } else {
         if (_type != YYKVStorageTypeSQLite) {
+            //对于没有fileName,且type是file/mixed的，直接删除file数据
             NSString *filename = [self _dbGetFilenameWithKey:key];
             if (filename) {
                 [self _fileDeleteWithName:filename];
             }
         }
+        //sqlite类型，fileName被忽略
         return [self _dbSaveWithKey:key value:value fileName:nil extendedData:extendedData];
     }
 }
@@ -811,6 +843,7 @@ static UIApplication *_YYSharedApplication() {
     switch (_type) {
         case YYKVStorageTypeSQLite: {
             if ([self _dbDeleteItemsWithSizeLargerThan:size]) {
+                //上面按key来删，没用_dbCheckpoint
                 [self _dbCheckpoint];
                 return YES;
             }
@@ -868,6 +901,7 @@ static UIApplication *_YYSharedApplication() {
     BOOL suc = NO;
     do {
         int perCount = 16;
+        //每次取16个删除
         items = [self _dbGetItemSizeInfoOrderByTimeAscWithLimit:perCount];
         for (YYKVStorageItem *item in items) {
             if (total > maxSize) {
@@ -879,6 +913,7 @@ static UIApplication *_YYSharedApplication() {
             } else {
                 break;
             }
+            //失败了直接break并返回
             if (!suc) break;
         }
     } while (total > maxSize && items.count > 0 && suc);
@@ -961,6 +996,7 @@ static UIApplication *_YYSharedApplication() {
     YYKVStorageItem *item = [self _dbGetItemWithKey:key excludeInlineData:NO];
     if (item) {
         [self _dbUpdateAccessTimeWithKey:key];
+        //处理file类型数据info在，但是file data丢失的情况
         if (item.filename) {
             item.value = [self _fileReadWithName:item.filename];
             if (!item.value) {
@@ -1017,6 +1053,7 @@ static UIApplication *_YYSharedApplication() {
 - (NSArray *)getItemForKeys:(NSArray *)keys {
     if (keys.count == 0) return nil;
     NSMutableArray *items = [self _dbGetItemWithKeys:keys excludeInlineData:NO];
+    //确保数据保真啥的
     if (_type != YYKVStorageTypeSQLite) {
         for (NSInteger i = 0, max = items.count; i < max; i++) {
             YYKVStorageItem *item = items[i];
