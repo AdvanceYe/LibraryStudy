@@ -103,6 +103,7 @@ static UIApplication *_YYSharedApplication() {
          https://opensource.apple.com/source/CF/CF-368/Collections.subproj/CFDictionary.c.auto.html
          static const CFDictionaryValueCallBacks __kCFNullDictionaryValueCallBacks = {0, NULL, NULL, NULL, NULL};
          */
+        //TODO:仔细研究一下：
         _dbStmtCache = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &keyCallbacks, &valueCallbacks);
         _dbLastOpenErrorTime = 0;
         _dbOpenErrorCount = 0;

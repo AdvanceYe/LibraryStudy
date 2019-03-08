@@ -32,6 +32,7 @@ static int64_t _YYDiskSpaceFree() {
 }
 
 /// String's md5 hash.
+//TODO:这个看懂。。真的用在数据库里了吗。。。。
 static NSString *_YYNSStringMD5(NSString *string) {
     if (!string) return nil;
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
@@ -47,6 +48,7 @@ static NSString *_YYNSStringMD5(NSString *string) {
 }
 
 /// weak reference for all instances
+//TODO: 为啥这里用map table???
 static NSMapTable *_globalInstances;
 static dispatch_semaphore_t _globalInstancesLock;
 
@@ -150,6 +152,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     return filename;
 }
 
+//TODO:这个为了干嘛用？
 - (void)_appWillBeTerminated {
     Lock();
     _kv = nil;
@@ -283,6 +286,7 @@ static void _YYDiskCacheSetGlobal(YYDiskCache *cache) {
     if (!value) return;
     NSString *filename = nil;
     if (_kv.type != YYKVStorageTypeSQLite) {
+        //>阈值, fileName != nil, 设为file..
         if (value.length > _inlineThreshold) {
             filename = [self _filenameForKey:key];
         }

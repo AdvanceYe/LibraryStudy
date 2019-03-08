@@ -23,6 +23,7 @@
 
 static char kInstalledConstraintsKey;
 
+//associated object，动态添加属性
 - (NSMutableSet *)mas_installedConstraints {
     NSMutableSet *constraints = objc_getAssociatedObject(self, &kInstalledConstraintsKey);
     if (!constraints) {
@@ -109,6 +110,11 @@ static char kInstalledConstraintsKey;
 - (BOOL)isActive {
     BOOL active = YES;
     if ([self supportsActiveProperty]) {
+        /*
+         isActive用来判断constraint是否添加上去了
+         You can activate or deactivate a constraint by changing this property. Note that only active constraints affect the calculated layout.
+         Activating or deactivating the constraint calls addConstraint: and removeConstraint: on the view that is the closest common ancestor of the items managed by this constraint.
+         */
         active = [self.layoutConstraint isActive];
     }
 
@@ -306,6 +312,7 @@ static char kInstalledConstraintsKey;
 }
 
 - (void)install {
+    //已经active了，直接return
     if (self.hasBeenInstalled) {
         return;
     }
@@ -325,6 +332,7 @@ static char kInstalledConstraintsKey;
     // therefore we assume that is refering to superview
     // eg make.left.equalTo(@10)
     if (!self.firstViewAttribute.isSizeAttribute && !self.secondViewAttribute) {
+        //如果secondLayoutAttribute是nil的话，默认是superView
         secondLayoutItem = self.firstViewAttribute.view.superview;
         secondLayoutAttribute = firstLayoutAttribute;
     }
@@ -342,6 +350,7 @@ static char kInstalledConstraintsKey;
     layoutConstraint.mas_key = self.mas_key;
     
     if (self.secondViewAttribute.view) {
+        //TODO: 寻找最近的父类
         MAS_VIEW *closestCommonSuperview = [self.firstViewAttribute.view mas_closestCommonSuperview:self.secondViewAttribute.view];
         NSAssert(closestCommonSuperview,
                  @"couldn't find a common superview for %@ and %@",

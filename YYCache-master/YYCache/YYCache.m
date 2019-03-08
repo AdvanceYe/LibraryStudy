@@ -22,6 +22,7 @@
 
 - (instancetype)initWithName:(NSString *)name {
     if (name.length == 0) return nil;
+    //TODO:待看
     NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
     NSString *path = [cacheFolder stringByAppendingPathComponent:name];
     return [self initWithPath:path];
@@ -62,10 +63,12 @@
             block(key, YES);
         });
     } else  {
+        //disk cache内建了一个concurrent queue.
         [_diskCache containsObjectForKey:key withBlock:block];
     }
 }
 
+//也是先去memory取，取不到去disk取
 - (id<NSCoding>)objectForKey:(NSString *)key {
     id<NSCoding> object = [_memoryCache objectForKey:key];
     if (!object) {
@@ -94,6 +97,7 @@
     }
 }
 
+//memory和disk都设一下
 - (void)setObject:(id<NSCoding>)object forKey:(NSString *)key {
     [_memoryCache setObject:object forKey:key];
     [_diskCache setObject:object forKey:key];

@@ -250,6 +250,11 @@
 				CLASSPREFIX = MAS;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Jonas Budelmann";
+				TargetAttributes = {
+					DD52F226179CAD57005CD195 = {
+						DevelopmentTeam = FU563UKA56;
+					};
+				};
 			};
 			buildConfigurationList = DD52F222179CAD57005CD195 /* Build configuration list for PBXProject "Masonry iOS Examples" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -465,10 +470,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50B25D0621957AEB87C3FCC2 /* Pods-Masonry iOS Examples.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = FU563UKA56;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Masonry iOS Examples/Masonry iOS Examples-Prefix.pch";
 				INFOPLIST_FILE = "Masonry iOS Examples/Masonry iOS Examples-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cloudling.${PRODUCT_NAME:rfc1034identifier}";
+				IPHONEOS_DEPLOYMENT_TARGET = 9;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rjoeye.-";
 				PRODUCT_NAME = "Masonry iOS Examples";
 				WRAPPER_EXTENSION = app;
 			};
@@ -478,10 +485,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 321AA59CF7B045B6D503D2E5 /* Pods-Masonry iOS Examples.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = FU563UKA56;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Masonry iOS Examples/Masonry iOS Examples-Prefix.pch";
 				INFOPLIST_FILE = "Masonry iOS Examples/Masonry iOS Examples-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cloudling.${PRODUCT_NAME:rfc1034identifier}";
+				IPHONEOS_DEPLOYMENT_TARGET = 9;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.rjoeye.-";
 				PRODUCT_NAME = "Masonry iOS Examples";
 				WRAPPER_EXTENSION = app;
 			};
