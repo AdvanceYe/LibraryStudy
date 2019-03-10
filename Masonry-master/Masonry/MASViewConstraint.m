@@ -317,6 +317,7 @@ static char kInstalledConstraintsKey;
         return;
     }
     
+    //TODO: 看看layoutConstraint是在哪个时机创建的？
     if ([self supportsActiveProperty] && self.layoutConstraint) {
         self.layoutConstraint.active = YES;
         [self.firstViewAttribute.view.mas_installedConstraints addObject:self];
@@ -365,6 +366,7 @@ static char kInstalledConstraintsKey;
 
     MASLayoutConstraint *existingConstraint = nil;
     if (self.updateExisting) {
+        //寻找已经install在installedView上的，除了constant，其它都相同的constraint.
         existingConstraint = [self layoutConstraintSimilarTo:layoutConstraint];
     }
     if (existingConstraint) {
@@ -400,11 +402,13 @@ static char kInstalledConstraintsKey;
 
 - (void)uninstall {
     if ([self supportsActiveProperty]) {
+        //constraint 设置active属性和view addConstraint/removeConstraint是一样的效果。主要看系统版本是否支持
         self.layoutConstraint.active = NO;
         [self.firstViewAttribute.view.mas_installedConstraints removeObject:self];
         return;
     }
     
+    //不支持active设置的话麻烦一些，还要各种set nil。。
     [self.installedView removeConstraint:self.layoutConstraint];
     self.layoutConstraint = nil;
     self.installedView = nil;

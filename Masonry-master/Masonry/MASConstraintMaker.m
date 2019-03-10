@@ -33,6 +33,7 @@
 }
 
 - (NSArray *)install {
+    //mas_remakeConstraints时，设置removeExisting = YES
     //需要uninstall已有的constraint
     if (self.removeExisting) {
         NSArray *installedConstraints = [MASViewConstraint installedConstraintsForView:self.view];
@@ -42,6 +43,7 @@
     }
     NSArray *constraints = self.constraints.copy;
     for (MASConstraint *constraint in constraints) {
+        //mas_updateConstraints时，设置updateExisting为YES
         constraint.updateExisting = self.updateExisting;
         [constraint install];
     }
@@ -57,6 +59,7 @@
     [self.constraints replaceObjectAtIndex:index withObject:replacementConstraint];
 }
 
+//maker中添加constraint
 - (MASConstraint *)constraint:(MASConstraint *)constraint addConstraintWithLayoutAttribute:(NSLayoutAttribute)layoutAttribute {
     MASViewAttribute *viewAttribute = [[MASViewAttribute alloc] initWithView:self.view layoutAttribute:layoutAttribute];
     MASViewConstraint *newConstraint = [[MASViewConstraint alloc] initWithFirstViewAttribute:viewAttribute];

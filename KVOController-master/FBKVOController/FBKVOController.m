@@ -135,6 +135,7 @@ NSString *const FBKVONotificationKeyPathKey = @"FBKVONotificationKeyPathKey";
 
 - (instancetype)initWithController:(FBKVOController *)controller keyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options block:(FBKVONotificationBlock)block
 {
+  //TODO: NULL和nil啥区别。。。
   return [self initWithController:controller keyPath:keyPath options:options block:block action:NULL context:NULL];
 }
 
@@ -436,7 +437,7 @@ NSString *const FBKVONotificationKeyPathKey = @"FBKVONotificationKeyPathKey";
 }
 
 #pragma mark Properties -
-
+//TODO:待看
 - (NSString *)debugDescription
 {
   NSMutableString *s = [NSMutableString stringWithFormat:@"<%@:%p", NSStringFromClass([self class]), self];
@@ -551,6 +552,7 @@ NSString *const FBKVONotificationKeyPathKey = @"FBKVONotificationKeyPathKey";
   NSMapTable *objectInfoMaps = [_objectInfosMap copy];
 
   // clear table and map
+  //去除retain的_objectInfosMap...拷贝成临时变量。
   [_objectInfosMap removeAllObjects];
 
   // unlock
