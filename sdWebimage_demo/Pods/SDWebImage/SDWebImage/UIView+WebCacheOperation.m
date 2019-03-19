@@ -41,6 +41,7 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
     }
 }
 
+//TODO:key咋是class string, eg. UIImageView????
 - (void)sd_cancelImageLoadOperationWithKey:(nullable NSString *)key {
     if (key) {
         // Cancel in progress downloader from queue

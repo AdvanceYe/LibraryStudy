@@ -25,6 +25,7 @@ static char TAG_ACTIVITY_SHOW;
 
 @implementation UIView (WebCache)
 
+//关联
 - (nullable NSURL *)sd_imageURL {
     return objc_getAssociatedObject(self, &imageURLKey);
 }
@@ -71,6 +72,7 @@ static char TAG_ACTIVITY_SHOW;
     [self sd_internalSetImageWithURL:url placeholderImage:placeholder options:options operationKey:operationKey internalSetImageBlock:internalSetImageBlock progress:progressBlock completed:completedBlock context:context];
 }
 
+//主要方法！！！
 - (void)sd_internalSetImageWithURL:(nullable NSURL *)url
                   placeholderImage:(nullable UIImage *)placeholder
                            options:(SDWebImageOptions)options
@@ -80,9 +82,12 @@ static char TAG_ACTIVITY_SHOW;
                          completed:(nullable SDExternalCompletionBlock)completedBlock
                            context:(nullable NSDictionary<NSString *, id> *)context {
     NSString *validOperationKey = operationKey ?: NSStringFromClass([self class]);
+    //TODO: validOperationKey eg.UIImageView 太大了吧？
     [self sd_cancelImageLoadOperationWithKey:validOperationKey];
+    //设置imageURLKey为url
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    //TODO:待看
     dispatch_group_t group = context[SDWebImageInternalSetImageGroupKey];
     if (!(options & SDWebImageDelayPlaceholder)) {
         if (group) {

@@ -93,6 +93,7 @@ typedef void(^SDWebImageNoParamsBlock)(void);
 
 FOUNDATION_EXPORT NSString *const SDWebImageErrorDomain;
 
+//防止多重定义
 #ifndef dispatch_queue_async_safe
 #define dispatch_queue_async_safe(queue, block)\
     if (dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL) == dispatch_queue_get_label(queue)) {\

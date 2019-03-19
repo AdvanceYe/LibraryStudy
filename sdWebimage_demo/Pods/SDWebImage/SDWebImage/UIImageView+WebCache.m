@@ -51,6 +51,7 @@
                            completed:completedBlock];
 }
 
+//已经deprecated了
 - (void)sd_setImageWithPreviousCachedImageWithURL:(nullable NSURL *)url
                                  placeholderImage:(nullable UIImage *)placeholder
                                           options:(SDWebImageOptions)options
