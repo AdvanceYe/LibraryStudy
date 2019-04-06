@@ -1,0 +1,29 @@
+PODS:
+  - liblua (5.1.4)
+  - LuaViewSDK (0.5.3)
+  - MJRefresh (3.1.12)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+
+DEPENDENCIES:
+  - liblua (from `../../`)
+  - LuaViewSDK (from `../../`)
+  - MJRefresh
+  - SDWebImage (= 3.7.5)
+
+EXTERNAL SOURCES:
+  liblua:
+    :path: "../../"
+  LuaViewSDK:
+    :path: "../../"
+
+SPEC CHECKSUMS:
+  liblua: cd63da7e611c6ebd3a5fd0fedf3292c97a131ebc
+  LuaViewSDK: 7c3c3c801b4414f77fb40fa33ddecb1fade4cb6a
+  MJRefresh: 11e1c9d86f2093ddcdbda7836bc2da477ddf568d
+  SDWebImage: 033e39d6f389724696c4d790b4daffcb4395a9f6
+
+PODFILE CHECKSUM: 5f143d80b3b293bb1cd8f5b6c8650799fd69b822
+
+COCOAPODS: 1.2.0

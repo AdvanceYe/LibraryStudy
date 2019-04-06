@@ -23,6 +23,7 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
         if (operations) {
             return operations;
         }
+        //map table可以操作key strong, value weak
         operations = [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory valueOptions:NSPointerFunctionsWeakMemory capacity:0];
         objc_setAssociatedObject(self, &loadOperationKey, operations, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return operations;
@@ -48,6 +49,7 @@ typedef NSMapTable<NSString *, id<SDWebImageOperation>> SDOperationsDictionary;
         SDOperationsDictionary *operationDictionary = [self sd_operationDictionary];
         id<SDWebImageOperation> operation;
         
+        //operations中能够查找到key值，cancel and remove
         @synchronized (self) {
             operation = [operationDictionary objectForKey:key];
         }

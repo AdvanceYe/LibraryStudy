@@ -1,0 +1,14 @@
+# Idea
+.Idea
+
+# Xcode
+*.xcuserstate
+project.xcworkspace/
+xcuserdata/
+
+# others
+.git_old_branch
+
+# Pods
+TaobaoEnv
+IOS/Demo/Pods/*

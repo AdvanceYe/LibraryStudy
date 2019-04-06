@@ -511,6 +511,7 @@
     }
     
     // First check the in-memory cache...
+    //同步在主线程查找memory..
     UIImage *image = [self imageFromMemoryCacheForKey:key];
     BOOL shouldQueryMemoryOnly = (image && !(options & SDImageCacheQueryDataWhenInMemory));
     if (shouldQueryMemoryOnly) {
@@ -520,6 +521,7 @@
         return nil;
     }
     
+    //异步查找disk..
     NSOperation *operation = [NSOperation new];
     void(^queryDiskBlock)(void) =  ^{
         if (operation.isCancelled) {
@@ -538,6 +540,7 @@
             } else if (diskData) {
                 cacheType = SDImageCacheTypeDisk;
                 // decode image data only if in-memory cache missed
+                //异步decode image...
                 diskImage = [self diskImageForKey:key data:diskData options:options];
                 if (diskImage && self.config.shouldCacheImagesInMemory) {
                     NSUInteger cost = diskImage.sd_memoryCost;

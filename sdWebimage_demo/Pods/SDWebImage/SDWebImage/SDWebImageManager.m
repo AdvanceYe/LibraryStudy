@@ -142,6 +142,7 @@
         UNLOCK(self.failedURLsLock);
     }
 
+    //不重试，直接返回
     if (url.absoluteString.length == 0 || (!(options & SDWebImageRetryFailed) && isFailedUrl)) {
         [self callCompletionBlockForOperation:operation completion:completedBlock error:[NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:nil] url:url];
         return operation;

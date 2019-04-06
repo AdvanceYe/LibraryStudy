@@ -82,7 +82,7 @@ static char TAG_ACTIVITY_SHOW;
                          completed:(nullable SDExternalCompletionBlock)completedBlock
                            context:(nullable NSDictionary<NSString *, id> *)context {
     NSString *validOperationKey = operationKey ?: NSStringFromClass([self class]);
-    //TODO: validOperationKey eg.UIImageView 太大了吧？
+    //validOperationKey eg.UIImageView - 一个viewmore一个key了哈
     [self sd_cancelImageLoadOperationWithKey:validOperationKey];
     //设置imageURLKey为url
     objc_setAssociatedObject(self, &imageURLKey, url, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

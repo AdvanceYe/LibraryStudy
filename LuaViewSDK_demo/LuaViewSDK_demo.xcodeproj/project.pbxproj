@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FAE6680A224730BA000BFC12 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE66809224730BA000BFC12 /* AppDelegate.m */; };
+		FAE6680D224730BA000BFC12 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6680C224730BA000BFC12 /* ViewController.m */; };
+		FAE66810224730BA000BFC12 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE6680E224730BA000BFC12 /* Main.storyboard */; };
+		FAE66812224730BB000BFC12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAE66811224730BB000BFC12 /* Assets.xcassets */; };
+		FAE66815224730BB000BFC12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE66813224730BB000BFC12 /* LaunchScreen.storyboard */; };
+		FAE66818224730BB000BFC12 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE66817224730BB000BFC12 /* main.m */; };
+		FAE66822224730BB000BFC12 /* LuaViewSDK_demoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE66821224730BB000BFC12 /* LuaViewSDK_demoTests.m */; };
+		FAE6682D224730BB000BFC12 /* LuaViewSDK_demoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE6682C224730BB000BFC12 /* LuaViewSDK_demoUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FAE6681E224730BB000BFC12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE667FD224730BA000BFC12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE66804224730BA000BFC12;
+			remoteInfo = LuaViewSDK_demo;
+		};
+		FAE66829224730BB000BFC12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAE667FD224730BA000BFC12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE66804224730BA000BFC12;
+			remoteInfo = LuaViewSDK_demo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FAE66805224730BA000BFC12 /* LuaViewSDK_demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LuaViewSDK_demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE66808224730BA000BFC12 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FAE66809224730BA000BFC12 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FAE6680B224730BA000BFC12 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		FAE6680C224730BA000BFC12 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FAE6680F224730BA000BFC12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FAE66811224730BB000BFC12 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAE66814224730BB000BFC12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FAE66816224730BB000BFC12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAE66817224730BB000BFC12 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FAE6681D224730BB000BFC12 /* LuaViewSDK_demoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LuaViewSDK_demoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE66821224730BB000BFC12 /* LuaViewSDK_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuaViewSDK_demoTests.m; sourceTree = "<group>"; };
+		FAE66823224730BB000BFC12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAE66828224730BB000BFC12 /* LuaViewSDK_demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LuaViewSDK_demoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAE6682C224730BB000BFC12 /* LuaViewSDK_demoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuaViewSDK_demoUITests.m; sourceTree = "<group>"; };
+		FAE6682E224730BB000BFC12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FAE66802224730BA000BFC12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE6681A224730BB000BFC12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE66825224730BB000BFC12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FAE667FC224730BA000BFC12 = {
+			isa = PBXGroup;
+			children = (
+				FAE66807224730BA000BFC12 /* LuaViewSDK_demo */,
+				FAE66820224730BB000BFC12 /* LuaViewSDK_demoTests */,
+				FAE6682B224730BB000BFC12 /* LuaViewSDK_demoUITests */,
+				FAE66806224730BA000BFC12 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FAE66806224730BA000BFC12 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FAE66805224730BA000BFC12 /* LuaViewSDK_demo.app */,
+				FAE6681D224730BB000BFC12 /* LuaViewSDK_demoTests.xctest */,
+				FAE66828224730BB000BFC12 /* LuaViewSDK_demoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FAE66807224730BA000BFC12 /* LuaViewSDK_demo */ = {
+			isa = PBXGroup;
+			children = (
+				FAE66808224730BA000BFC12 /* AppDelegate.h */,
+				FAE66809224730BA000BFC12 /* AppDelegate.m */,
+				FAE6680B224730BA000BFC12 /* ViewController.h */,
+				FAE6680C224730BA000BFC12 /* ViewController.m */,
+				FAE6680E224730BA000BFC12 /* Main.storyboard */,
+				FAE66811224730BB000BFC12 /* Assets.xcassets */,
+				FAE66813224730BB000BFC12 /* LaunchScreen.storyboard */,
+				FAE66816224730BB000BFC12 /* Info.plist */,
+				FAE66817224730BB000BFC12 /* main.m */,
+			);
+			path = LuaViewSDK_demo;
+			sourceTree = "<group>";
+		};
+		FAE66820224730BB000BFC12 /* LuaViewSDK_demoTests */ = {
+			isa = PBXGroup;
+			children = (
+				FAE66821224730BB000BFC12 /* LuaViewSDK_demoTests.m */,
+				FAE66823224730BB000BFC12 /* Info.plist */,
+			);
+			path = LuaViewSDK_demoTests;
+			sourceTree = "<group>";
+		};
+		FAE6682B224730BB000BFC12 /* LuaViewSDK_demoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FAE6682C224730BB000BFC12 /* LuaViewSDK_demoUITests.m */,
+				FAE6682E224730BB000BFC12 /* Info.plist */,
+			);
+			path = LuaViewSDK_demoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FAE66804224730BA000BFC12 /* LuaViewSDK_demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE66831224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demo" */;
+			buildPhases = (
+				FAE66801224730BA000BFC12 /* Sources */,
+				FAE66802224730BA000BFC12 /* Frameworks */,
+				FAE66803224730BA000BFC12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LuaViewSDK_demo;
+			productName = LuaViewSDK_demo;
+			productReference = FAE66805224730BA000BFC12 /* LuaViewSDK_demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FAE6681C224730BB000BFC12 /* LuaViewSDK_demoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE66834224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demoTests" */;
+			buildPhases = (
+				FAE66819224730BB000BFC12 /* Sources */,
+				FAE6681A224730BB000BFC12 /* Frameworks */,
+				FAE6681B224730BB000BFC12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAE6681F224730BB000BFC12 /* PBXTargetDependency */,
+			);
+			name = LuaViewSDK_demoTests;
+			productName = LuaViewSDK_demoTests;
+			productReference = FAE6681D224730BB000BFC12 /* LuaViewSDK_demoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FAE66827224730BB000BFC12 /* LuaViewSDK_demoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FAE66837224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demoUITests" */;
+			buildPhases = (
+				FAE66824224730BB000BFC12 /* Sources */,
+				FAE66825224730BB000BFC12 /* Frameworks */,
+				FAE66826224730BB000BFC12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FAE6682A224730BB000BFC12 /* PBXTargetDependency */,
+			);
+			name = LuaViewSDK_demoUITests;
+			productName = LuaViewSDK_demoUITests;
+			productReference = FAE66828224730BB000BFC12 /* LuaViewSDK_demoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FAE667FD224730BA000BFC12 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = copyCat_yy;
+				TargetAttributes = {
+					FAE66804224730BA000BFC12 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					FAE6681C224730BB000BFC12 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = FAE66804224730BA000BFC12;
+					};
+					FAE66827224730BB000BFC12 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = FAE66804224730BA000BFC12;
+					};
+				};
+			};
+			buildConfigurationList = FAE66800224730BA000BFC12 /* Build configuration list for PBXProject "LuaViewSDK_demo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FAE667FC224730BA000BFC12;
+			productRefGroup = FAE66806224730BA000BFC12 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FAE66804224730BA000BFC12 /* LuaViewSDK_demo */,
+				FAE6681C224730BB000BFC12 /* LuaViewSDK_demoTests */,
+				FAE66827224730BB000BFC12 /* LuaViewSDK_demoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FAE66803224730BA000BFC12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE66815224730BB000BFC12 /* LaunchScreen.storyboard in Resources */,
+				FAE66812224730BB000BFC12 /* Assets.xcassets in Resources */,
+				FAE66810224730BA000BFC12 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE6681B224730BB000BFC12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE66826224730BB000BFC12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FAE66801224730BA000BFC12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE6680D224730BA000BFC12 /* ViewController.m in Sources */,
+				FAE66818224730BB000BFC12 /* main.m in Sources */,
+				FAE6680A224730BA000BFC12 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE66819224730BB000BFC12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE66822224730BB000BFC12 /* LuaViewSDK_demoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FAE66824224730BB000BFC12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FAE6682D224730BB000BFC12 /* LuaViewSDK_demoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FAE6681F224730BB000BFC12 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE66804224730BA000BFC12 /* LuaViewSDK_demo */;
+			targetProxy = FAE6681E224730BB000BFC12 /* PBXContainerItemProxy */;
+		};
+		FAE6682A224730BB000BFC12 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE66804224730BA000BFC12 /* LuaViewSDK_demo */;
+			targetProxy = FAE66829224730BB000BFC12 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FAE6680E224730BA000BFC12 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAE6680F224730BA000BFC12 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FAE66813224730BB000BFC12 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FAE66814224730BB000BFC12 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FAE6682F224730BB000BFC12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FAE66830224730BB000BFC12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FAE66832224730BB000BFC12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FAE66833224730BB000BFC12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demo";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FAE66835224730BB000BFC12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LuaViewSDK_demo.app/LuaViewSDK_demo";
+			};
+			name = Debug;
+		};
+		FAE66836224730BB000BFC12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LuaViewSDK_demo.app/LuaViewSDK_demo";
+			};
+			name = Release;
+		};
+		FAE66838224730BB000BFC12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LuaViewSDK_demo;
+			};
+			name = Debug;
+		};
+		FAE66839224730BB000BFC12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = LuaViewSDK_demoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qiuqiushop.LuaViewSDK-demoUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LuaViewSDK_demo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FAE66800224730BA000BFC12 /* Build configuration list for PBXProject "LuaViewSDK_demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE6682F224730BB000BFC12 /* Debug */,
+				FAE66830224730BB000BFC12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE66831224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE66832224730BB000BFC12 /* Debug */,
+				FAE66833224730BB000BFC12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE66834224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE66835224730BB000BFC12 /* Debug */,
+				FAE66836224730BB000BFC12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FAE66837224730BB000BFC12 /* Build configuration list for PBXNativeTarget "LuaViewSDK_demoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FAE66838224730BB000BFC12 /* Debug */,
+				FAE66839224730BB000BFC12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FAE667FD224730BA000BFC12 /* Project object */;
+}
